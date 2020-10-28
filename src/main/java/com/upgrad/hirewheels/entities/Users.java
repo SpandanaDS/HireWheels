@@ -1,14 +1,14 @@
 package com.upgrad.hirewheels.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.*;
 
 @Entity
-@Table(name="users")
+@Repository
 public class Users {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
 
     @Column(nullable = false)
