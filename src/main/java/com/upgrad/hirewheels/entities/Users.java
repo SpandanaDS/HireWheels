@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.*;
 
 @Entity
-@Repository
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

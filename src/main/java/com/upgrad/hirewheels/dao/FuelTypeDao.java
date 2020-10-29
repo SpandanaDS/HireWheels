@@ -1,4 +1,10 @@
 package com.upgrad.hirewheels.dao;
 
-public class FuelTypeDao {
+import com.upgrad.hirewheels.entities.Users;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface FuelTypeDao extends JpaRepository<Users, Integer> {
+
 }

@@ -63,7 +63,7 @@ public class HireWheelsApplication {
 
 
 		System.out.println("Find By Firstname\n"+usersDao.findByFirstNameIgnoreCase("spandana"));
-	/*	System.out.println("Find by firstname or last name\n"+usersDao.findByFirstNameOrLastNameIgnoreCase("lively"));*/
+		System.out.println("Find by firstname or last name\n"+usersDao.findByFirstNameOrLastNameIgnoreCase("lively","dev"));
 		System.out.println("Find By email\n"+usersDao.findByEmailIgnoreCase("av@gmail.com"));
 		System.out.println("Find By mobile number\n"+usersDao.findByMobileNo("8976636918"));
 
