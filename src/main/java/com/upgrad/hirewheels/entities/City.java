@@ -1,15 +1,20 @@
 package com.upgrad.hirewheels.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class City {
     @Id
+    @Column(name = "city_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int cityId;
 
-    @Column(nullable = false)
+    @Column(name="city_name",nullable = false)
     private String cityName;
+
+    @OneToMany(mappedBy = "city",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
+    private Set<Location> locations;
 
     public int getCityId() {
         return cityId;
@@ -24,6 +29,19 @@ public class City {
     }
 
     public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public Set<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(Set<Location> locations) {
+        this.locations = locations;
+    }
+
+    public City(int cityId, String cityName) {
+        this.cityId = cityId;
         this.cityName = cityName;
     }
 

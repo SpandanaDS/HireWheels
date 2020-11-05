@@ -1,15 +1,20 @@
 package com.upgrad.hirewheels.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class FuelType {
     @Id
+    @Column(name = "fuel_type_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int fuelTypeId;
 
-    @Column(nullable = false,unique = true)
+    @Column(name="fuel_type",nullable = false,unique = true)
     private String fuelType;
+
+    @OneToMany(mappedBy = "fuelType",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
+    private Set<Vehicle> vehicles;
 
     public int getFuelTypeId() {
         return fuelTypeId;
@@ -24,6 +29,19 @@ public class FuelType {
     }
 
     public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
+    }
+
+    public Set<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(Set<Vehicle> vehicles) {
+        this.vehicles = vehicles;
+    }
+
+    public FuelType(int fuelTypeId, String fuelType) {
+        this.fuelTypeId = fuelTypeId;
         this.fuelType = fuelType;
     }
 

@@ -1,36 +1,45 @@
 package com.upgrad.hirewheels.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Vehicle {
     @Id
+    @Column(name = "vehicle_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int vehicleId;
 
-    @Column(nullable = false)
+    @Column(name="vehicle_model",nullable = false)
     private String vehicleModel;
 
-    @Column(length = 10,nullable = false)
+    @Column(name="vehicle_number",length = 10,nullable = false)
     private String vehicleNumber;
-
-    @Column(length = 10)
-    private String vehicleSubcategoryId;
 
     @Column(nullable = false)
     private String color;
 
-    @Column(length = 10,nullable = false)
-    private int locationId;
 
-    @Column(nullable = false,length = 10)
-    private int fuelTypeId;
-
-    @Column(length = 1,nullable = false)
+    @Column(name="availability_status",length = 1,nullable = false)
     private int availabilityStatus;
 
-    @Column(nullable = false)
+    @Column(name="vehicle_image_url",nullable = false)
     private String vehicleImageUrl;
+
+    @OneToMany(mappedBy = "vehicle",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
+    private Set<Booking> bookings;
+
+    @ManyToOne
+    @JoinColumn(name = "fuel_type_id",nullable = false)
+    private FuelType fuelType;
+
+    @ManyToOne
+    @JoinColumn(name = "location_id",nullable = false)
+    private Location location;
+
+    @ManyToOne
+    @JoinColumn(name = "vehicle_subcategory_id",nullable = false)
+    private VehicleSubcategory vehicleSubcategory;
 
     public int getVehicleId() {
         return vehicleId;
@@ -56,13 +65,6 @@ public class Vehicle {
         this.vehicleNumber = vehicleNumber;
     }
 
-    public String getVehicleSubcategoryId() {
-        return vehicleSubcategoryId;
-    }
-
-    public void setVehicleSubcategoryId(String vehicleSubcategoryId) {
-        this.vehicleSubcategoryId = vehicleSubcategoryId;
-    }
 
     public String getColor() {
         return color;
@@ -70,22 +72,6 @@ public class Vehicle {
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public int getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(int locationId) {
-        this.locationId = locationId;
-    }
-
-    public int getFuelTypeId() {
-        return fuelTypeId;
-    }
-
-    public void setFuelTypeId(int fuelTypeId) {
-        this.fuelTypeId = fuelTypeId;
     }
 
     public int getAvailabilityStatus() {
@@ -104,18 +90,50 @@ public class Vehicle {
         this.vehicleImageUrl = vehicleImageUrl;
     }
 
+    public Set<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
+    public FuelType getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(FuelType fuelType) {
+        this.fuelType = fuelType;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public VehicleSubcategory getVehicleSubcategory() {
+        return vehicleSubcategory;
+    }
+
+    public void setVehicleSubcategory(VehicleSubcategory vehicleSubcategory) {
+        this.vehicleSubcategory = vehicleSubcategory;
+    }
+
     @Override
     public String toString() {
         return "Vehicle{" +
                 "vehicleId=" + vehicleId +
                 ", vehicleModel='" + vehicleModel + '\'' +
                 ", vehicleNumber='" + vehicleNumber + '\'' +
-                ", vehicleSubcategoryId='" + vehicleSubcategoryId + '\'' +
                 ", color='" + color + '\'' +
-                ", locationId=" + locationId +
-                ", fuelTypeId=" + fuelTypeId +
                 ", availabilityStatus=" + availabilityStatus +
                 ", vehicleImageUrl='" + vehicleImageUrl + '\'' +
+                ", fuelType=" + fuelType +
+                ", location=" + location +
+                ", vehicleSubcategory=" + vehicleSubcategory +
                 '}';
     }
 }

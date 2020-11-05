@@ -3,16 +3,19 @@ package com.upgrad.hirewheels.entities;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Users {
     @Id
+    @Column(name="user_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
 
-    @Column(nullable = false)
+    @Column(name="first_name",nullable = false)
     private String firstName;
 
+    @Column(name = "last_name")
     private String lastName;
 
     @Column(nullable = false)
@@ -21,13 +24,36 @@ public class Users {
     @Column(nullable = false,unique = true)
     private String email;
 
-    @Column(nullable = false,unique = true,length = 10)
+    @Column(name="mobile_no",nullable = false,unique = true,length = 10)
     private String mobileNo;
 
-    @Column(length = 10, nullable = false)
-    private int roleId;
+    @Column(name="wallet_money")
+    private float walletMoney=10000.00f;
 
-    private int walletMoney;
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
+    private Set<Booking> bookings;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id",nullable = false)
+    private Role role;
+
+    public Users() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", mobileNo='" + mobileNo + '\'' +
+                ", walletMoney=" + walletMoney +
+                ", role=" + role +
+                '}';
+    }
 
     public int getUserId() {
         return userId;
@@ -77,33 +103,38 @@ public class Users {
         this.mobileNo = mobileNo;
     }
 
-    public int getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
-
-    public int getWalletMoney() {
+    public float getWalletMoney() {
         return walletMoney;
     }
 
-    public void setWalletMoney(int walletMoney) {
+    public void setWalletMoney(float walletMoney) {
         this.walletMoney = walletMoney;
     }
 
-    @Override
-    public String toString() {
-        return "Users{" +
-                "userId=" + userId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", mobileNo='" + mobileNo + '\'' +
-                ", roleId=" + roleId +
-                ", walletMoney=" + walletMoney +
-                '}';
+    public Set<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Users( String firstName, String lastName, String password, String email, String mobileNo, float walletMoney, Role role) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.mobileNo = mobileNo;
+        this.walletMoney = walletMoney;
+        this.role = role;
     }
 }

@@ -2,32 +2,51 @@ package com.upgrad.hirewheels.entities;
 
 import javax.persistence.*;
 
+
 @Entity
 public class Booking {
     @Id
+    @Column(name = "booking_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int bookingId;
 
-    @Column(nullable = false)
+    @Column(name="pickup_date",nullable = false)
     private int pickupDate;
 
-    @Column(nullable = false)
+    @Column(name="dropoff_date",nullable = false)
     private int dropoffDate;
 
-    @Column(nullable = false)
+    @Column(name="booking_date",nullable = false)
     private int bookingDate;
 
     @Column(nullable = false)
-    private int amount;
+    private float amount;
 
-    @Column(length = 10,nullable = false)
-    private int locationId;
+    @ManyToOne
+    @JoinColumn(name = "location_id",nullable = false)
+    private Location location;
 
-    @Column(nullable = false)
-    private int vehicleId;
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id",nullable = false)
+    private Vehicle vehicle;
 
-    @Column(nullable = false)
-    private int userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
+    private Users user;
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "bookingId=" + bookingId +
+                ", pickupDate=" + pickupDate +
+                ", dropoffDate=" + dropoffDate +
+                ", bookingDate=" + bookingDate +
+                ", amount=" + amount +
+                ", location=" + location +
+                ", vehicle=" + vehicle +
+                ", user=" + user +
+                '}';
+    }
 
     public int getBookingId() {
         return bookingId;
@@ -61,49 +80,35 @@ public class Booking {
         this.bookingDate = bookingDate;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
-    public int getLocationId() {
-        return locationId;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLocationId(int locationId) {
-        this.locationId = locationId;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
-    public int getVehicleId() {
-        return vehicleId;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public void setVehicleId(int vehicleId) {
-        this.vehicleId = vehicleId;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
-    public int getUserId() {
-        return userId;
+    public Users getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    @Override
-    public String toString() {
-        return "Booking{" +
-                "bookingId=" + bookingId +
-                ", pickupDate=" + pickupDate +
-                ", dropoffDate=" + dropoffDate +
-                ", bookingDate=" + bookingDate +
-                ", amount=" + amount +
-                ", locationId=" + locationId +
-                ", vehicleId=" + vehicleId +
-                ", userId=" + userId +
-                '}';
+    public void setUser(Users user) {
+        this.user = user;
     }
 }
