@@ -16,6 +16,15 @@ public class City {
     @OneToMany(mappedBy = "city",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     private Set<Location> locations;
 
+    public City(int cityId, String cityName) {
+        this.cityId = cityId;
+        this.cityName = cityName;
+    }
+
+    public City() {
+
+    }
+
     public int getCityId() {
         return cityId;
     }
@@ -40,10 +49,6 @@ public class City {
         this.locations = locations;
     }
 
-    public City(int cityId, String cityName) {
-        this.cityId = cityId;
-        this.cityName = cityName;
-    }
 
     @Override
     public String toString() {

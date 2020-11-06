@@ -16,6 +16,10 @@ public class VehicleCategory {
     @OneToMany(mappedBy = "vehicleCategory",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     private Set<VehicleSubcategory> vehicleSubcategories;
 
+    public VehicleCategory() {
+
+    }
+
     public int getVehicleCategoryId() {
         return vehicleCategoryId;
     }

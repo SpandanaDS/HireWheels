@@ -3,6 +3,7 @@ package com.upgrad.hirewheels.services;
 import com.upgrad.hirewheels.dao.*;
 import com.upgrad.hirewheels.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,25 +14,40 @@ import java.util.List;
 public class InitServiceImpl implements InitService {
 
     @Autowired
+    @Qualifier("roleDao")
     RoleDao roleDao;
 
     @Autowired
+    @Qualifier("usersDao")
     UsersDao usersDao;
 
     @Autowired
+    @Qualifier("vehicleCategoryDao")
     VehicleCategoryDao vehicleCategoryDao;
 
     @Autowired
+    @Qualifier("vehicleSubcategoryDao")
     VehicleSubcategoryDao vehicleSubcategoryDao;
 
     @Autowired
+    @Qualifier("vehicleDao")
+    VehicleDao vehicleDao;
+
+    @Autowired
+    @Qualifier("cityDao")
     CityDao cityDao;
 
     @Autowired
+    @Qualifier("fuelTypeDao")
     FuelTypeDao fuelTypeDao;
 
     @Autowired
+    @Qualifier("locationDao")
     LocationDao locationDao;
+
+    @Autowired
+    @Qualifier("bookingDao")
+    BookingDao bookingDao;
 
 
     public void start() {
@@ -55,7 +71,6 @@ public class InitServiceImpl implements InitService {
                 "Hiranandani Tower",400020,cityDao.findById(1).get());
         locationDao.save(location);
     }
-
     private void addFuelType() {
         List<FuelType> fuelTypeList = Arrays.asList(new FuelType(1,"Petrol"), new FuelType(2, "Diesel"));
         fuelTypeDao.saveAll(fuelTypeList);

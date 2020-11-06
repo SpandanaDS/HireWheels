@@ -16,6 +16,10 @@ public class FuelType {
     @OneToMany(mappedBy = "fuelType",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     private Set<Vehicle> vehicles;
 
+    public FuelType() {
+
+    }
+
     public int getFuelTypeId() {
         return fuelTypeId;
     }

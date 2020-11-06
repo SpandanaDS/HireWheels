@@ -17,11 +17,15 @@ public class VehicleSubcategory {
     private float pricePerDay;
 
     @ManyToOne
-    @JoinColumn(name="vehicle_category_id",nullable = false)
+    @JoinColumn(name="vehicle_category_id")
     private VehicleCategory vehicleCategory;
 
     @OneToMany(mappedBy = "vehicleSubcategory",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     private Set<Vehicle> vehicles;
+
+    public VehicleSubcategory() {
+
+    }
 
 
     public Set<Vehicle> getVehicles() {

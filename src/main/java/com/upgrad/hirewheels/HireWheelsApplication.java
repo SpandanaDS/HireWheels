@@ -2,7 +2,14 @@ package com.upgrad.hirewheels;
 
 import com.upgrad.hirewheels.dao.*;
 import com.upgrad.hirewheels.entities.Users;
+import com.upgrad.hirewheels.exceptions.UserAlreadyExistsException;
+import com.upgrad.hirewheels.exceptions.UserDetailsNotFoundException;
+import com.upgrad.hirewheels.services.AdminService;
 import com.upgrad.hirewheels.services.InitService;
+import com.upgrad.hirewheels.services.InitServiceImpl;
+import com.upgrad.hirewheels.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.upgrad.hirewheels.entities.*;
@@ -14,8 +21,10 @@ import java.util.List;
 
 @SpringBootApplication
 public class HireWheelsApplication {
+	@Autowired
+	AdminService adminService;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UserAlreadyExistsException, UserDetailsNotFoundException {
 
 		ApplicationContext context = SpringApplication.run(HireWheelsApplication.class, args);
 		UsersDao usersDao = context.getBean(UsersDao.class);
@@ -27,7 +36,12 @@ public class HireWheelsApplication {
 		VehicleDao vehicleDao = context.getBean(VehicleDao.class);
 		VehicleCategoryDao vehicleCategoryDao = context.getBean(VehicleCategoryDao.class);
 		VehicleSubcategoryDao vehicleSubcategoryDao = context.getBean(VehicleSubcategoryDao.class);
-		InitService initService=context.getBean(InitService.class);
+		/*InitService initService=context.getBean(InitService.class);
+		initService.start();*/
+
+		UserService userService=context.getBean(UserService.class);
+
+
 
 
 		Role admin=new Role();
@@ -42,7 +56,7 @@ public class HireWheelsApplication {
 		roleDao.findAll().forEach(System.out::println);
 
 
-		Users users1=new Users();
+	/*	Users users1=new Users();
 		users1.setFirstName("Spandana");
 		users1.setLastName("Dev");
 		users1.setEmail("spa@gmail.com");
@@ -102,9 +116,34 @@ public class HireWheelsApplication {
 
 		System.out.println("*************Finding second page of users*************");
 		Page<Users> page1 = usersDao.findAll(PageRequest.of(1, 2));
-		page1.stream().forEach(users -> System.out.println(users.toString()));
+		page1.stream().forEach(users -> System.out.println(users.toString()));*/
+
+		Users users5=new Users();
+		users5.setFirstName("spandana");
+		users5.setLastName("dev");
+		users5.setEmail("vc@gmail.com");
+		users5.setPassword("908665yg");
+		users5.setMobileNo("8976636909");
+		users5.setRole(roleDao.findById(2).get());
+		users5= userService.createUser(users5);
+
+		Users users3=new Users();
+		users3.setFirstName("Amogh");
+		users3.setLastName("V");
+		users3.setEmail("vc11@gmail.com");
+		users3.setPassword("poutgh9");
+		users3.setMobileNo("8976636967");
+		users3.setRole(roleDao.findById(2).get());
+		users3= userService.createUser(users3);
+
+
+		System.out.println(userService.getUser("vc11@gmail.com","poutgh9"));
+
+		Vehicle vehicle=new Vehicle();
+		vehicle.
 
 	}
+
 
 	}
 

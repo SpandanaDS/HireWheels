@@ -30,6 +30,10 @@ public class Location {
     @OneToMany(mappedBy = "location",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     private Set<Vehicle> vehicles;
 
+    public Location() {
+
+    }
+
     public int getLocationId() {
         return locationId;
     }
