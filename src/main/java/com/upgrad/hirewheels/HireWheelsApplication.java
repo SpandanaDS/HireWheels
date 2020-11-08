@@ -4,6 +4,7 @@ import com.upgrad.hirewheels.dao.*;
 import com.upgrad.hirewheels.entities.Users;
 import com.upgrad.hirewheels.exceptions.UserAlreadyExistsException;
 import com.upgrad.hirewheels.exceptions.UserDetailsNotFoundException;
+import com.upgrad.hirewheels.exceptions.VehicleDetailsNotFoundException;
 import com.upgrad.hirewheels.services.AdminService;
 import com.upgrad.hirewheels.services.InitService;
 import com.upgrad.hirewheels.services.InitServiceImpl;
@@ -17,14 +18,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
 public class HireWheelsApplication {
-	@Autowired
-	AdminService adminService;
 
-	public static void main(String[] args) throws UserAlreadyExistsException, UserDetailsNotFoundException {
+	public static void main(String[] args) throws UserAlreadyExistsException, UserDetailsNotFoundException, VehicleDetailsNotFoundException {
 
 		ApplicationContext context = SpringApplication.run(HireWheelsApplication.class, args);
 		UsersDao usersDao = context.getBean(UsersDao.class);
@@ -40,9 +41,11 @@ public class HireWheelsApplication {
 		initService.start();*/
 
 		UserService userService=context.getBean(UserService.class);
+		AdminService adminService=context.getBean(AdminService.class);
 
 
 
+/*
 
 		Role admin=new Role();
 		admin.setRoleName("ADMIN");
@@ -54,6 +57,7 @@ public class HireWheelsApplication {
 
 		System.out.println("**************role***********");
 		roleDao.findAll().forEach(System.out::println);
+*/
 
 
 	/*	Users users1=new Users();
@@ -118,7 +122,7 @@ public class HireWheelsApplication {
 		Page<Users> page1 = usersDao.findAll(PageRequest.of(1, 2));
 		page1.stream().forEach(users -> System.out.println(users.toString()));*/
 
-		Users users5=new Users();
+		/*Users users5=new Users();
 		users5.setFirstName("spandana");
 		users5.setLastName("dev");
 		users5.setEmail("vc@gmail.com");
@@ -137,11 +141,57 @@ public class HireWheelsApplication {
 		users3= userService.createUser(users3);
 
 
-		System.out.println(userService.getUser("vc11@gmail.com","poutgh9"));
+		System.out.println(userService.getUser("vc11@gmail.com","poutgh9"));*/
+
+
+		cityDao.save(new City(1,"Mumbai"));
+
+		Location location = new Location(1, "Worli",
+				"Dr E Moses Rd, Worli Naka, Upper Worli",400018,cityDao.findById(1).get());
+		locationDao.save(location);
+
+
+		List<VehicleCategory> vehicleCategoryList = Arrays.asList(new VehicleCategory(10, "CAR"),
+				new VehicleCategory(11,"BIKE"));
+		vehicleCategoryDao.saveAll(vehicleCategoryList);
+
+		List<VehicleSubcategory> vehicleSubcategories = new ArrayList<>();
+
+		vehicleSubcategories.add(new VehicleSubcategory(1, "SUV",
+				300,vehicleCategoryDao.findByVehicleCategoryId(10) ));
+
+		vehicleSubcategories.add(new VehicleSubcategory(2, "SEDAN",
+				350,vehicleCategoryDao.findByVehicleCategoryId(10) ));
+
+		vehicleSubcategories.add(new VehicleSubcategory(3, "HATCHBACK",
+				250,vehicleCategoryDao.findByVehicleCategoryId(10) ));
+
+		vehicleSubcategories.add(new VehicleSubcategory(4, "CRUISER",
+				200,vehicleCategoryDao.findByVehicleCategoryId(11) ));
+
+		vehicleSubcategories.add(new VehicleSubcategory(5, "DIRT BIKE",
+				200,vehicleCategoryDao.findByVehicleCategoryId(11) ));
+
+		vehicleSubcategories.add(new VehicleSubcategory(6, "SPORTS BIKE",
+				150,vehicleCategoryDao.findByVehicleCategoryId(11) ));
+
+		vehicleSubcategoryDao.saveAll(vehicleSubcategories);
+
+		List<FuelType> fuelTypeList = Arrays.asList(new FuelType(1,"Petrol"), new FuelType(2, "Diesel"));
+		fuelTypeDao.saveAll(fuelTypeList);
 
 		Vehicle vehicle=new Vehicle();
-		vehicle.
+		vehicle.setVehicleModel("Skoda Octavia");
+		vehicle.setVehicleNumber("MH06YR0987");
+		vehicle.setColor("white");
+		vehicle.setFuelType(fuelTypeDao.findByFuelTypeId(10));
+		vehicle.setLocation(locationDao.findByLocationId(2));
+		vehicle.setVehicleImageUrl("https://color.com");
+		vehicle.setVehicleSubcategory(vehicleSubcategoryDao.findByVehicleSubcategoryId(7));
 
+		vehicle= adminService.registerVehicle(vehicle);
+
+		adminService.changeAvailabilty(11);
 	}
 
 

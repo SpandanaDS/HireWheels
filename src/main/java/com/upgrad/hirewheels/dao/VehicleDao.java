@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository("vehicleDao")
 public interface VehicleDao extends JpaRepository<Vehicle, Integer> {
-
+        public Vehicle findByVehicleId(int id);
 }

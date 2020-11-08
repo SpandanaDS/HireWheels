@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository("fuelTypeDao")
 public interface FuelTypeDao extends JpaRepository<FuelType, Integer> {
+    public FuelType findByFuelTypeId(int id);
 
 }

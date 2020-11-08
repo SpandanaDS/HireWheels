@@ -9,7 +9,7 @@ import java.util.Set;
 public class Users {
     @Id
     @Column(name="user_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int userId;
 
     @Column(name="first_name",nullable = false)

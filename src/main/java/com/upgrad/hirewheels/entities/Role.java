@@ -7,7 +7,7 @@ import java.util.Set;
 public class Role {
     @Id
     @Column(name="role_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int roleId;
 
     @Column(name="role_name",nullable = false,unique = true)
