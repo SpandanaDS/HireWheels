@@ -1,5 +1,7 @@
 package com.upgrad.hirewheels.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ public class Role {
     @Column(name="role_name",nullable = false,unique = true)
     private String roleName;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "role",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     private Set<Users> usersSet;
 

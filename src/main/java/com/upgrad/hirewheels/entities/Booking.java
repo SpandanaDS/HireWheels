@@ -1,5 +1,7 @@
 package com.upgrad.hirewheels.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 
@@ -22,14 +24,17 @@ public class Booking {
     @Column(nullable = false)
     private float amount;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "location_id",nullable = false)
     private Location location;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "vehicle_id",nullable = false)
     private Vehicle vehicle;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
     private Users user;

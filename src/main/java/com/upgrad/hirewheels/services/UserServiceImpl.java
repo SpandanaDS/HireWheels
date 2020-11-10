@@ -15,6 +15,10 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UsersDao usersDao;
 
+    @Autowired
+    UserService userService;
+
+
     @Override
     public Users createUser(Users users) throws UserAlreadyExistsException{
         if(usersDao.findByEmailIgnoreCase(users.getEmail()).isPresent() ){

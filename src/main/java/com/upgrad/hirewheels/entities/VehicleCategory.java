@@ -1,5 +1,7 @@
 package com.upgrad.hirewheels.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ public class VehicleCategory {
     @Column(name="vehicle_category_name",nullable = false,unique = true)
     private String vehicleCategoryName;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "vehicleCategory",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     private Set<VehicleSubcategory> vehicleSubcategories;
 

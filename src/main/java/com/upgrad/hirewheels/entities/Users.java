@@ -1,5 +1,7 @@
 package com.upgrad.hirewheels.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
@@ -30,9 +32,11 @@ public class Users {
     @Column(name="wallet_money")
     private float walletMoney=10000.00f;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     private Set<Booking> bookings;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "role_id",nullable = false)
     private Role role;

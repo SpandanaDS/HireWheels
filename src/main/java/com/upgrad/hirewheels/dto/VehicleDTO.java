@@ -1,51 +1,23 @@
-package com.upgrad.hirewheels.entities;
+package com.upgrad.hirewheels.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.upgrad.hirewheels.entities.Booking;
+import com.upgrad.hirewheels.entities.FuelType;
+import com.upgrad.hirewheels.entities.Location;
+import com.upgrad.hirewheels.entities.VehicleSubcategory;
 
-import javax.persistence.*;
 import java.util.Set;
 
-@Entity
-public class Vehicle {
-    @Id
-    @Column(name = "vehicle_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class VehicleDTO {
+
     private int vehicleId;
-
-    @Column(name="vehicle_model",nullable = false)
     private String vehicleModel;
-
-    @Column(name="vehicle_number",length = 10,nullable = false)
     private String vehicleNumber;
-
-    @Column(nullable = false)
     private String color;
-
-
-    @Column(name="availability_status",length = 1,nullable = false)
     private int availabilityStatus;
-
-    @Column(name="vehicle_image_url",nullable = false)
     private String vehicleImageUrl;
-
-    @JsonBackReference
-    @OneToMany(mappedBy = "vehicle",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     private Set<Booking> bookings;
-
-    @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "fuel_type_id",nullable = false)
     private FuelType fuelType;
-
-    @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "location_id",nullable = false)
     private Location location;
-
-    @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "vehicle_subcategory_id",nullable = false)
     private VehicleSubcategory vehicleSubcategory;
 
     public int getVehicleId() {
@@ -71,7 +43,6 @@ public class Vehicle {
     public void setVehicleNumber(String vehicleNumber) {
         this.vehicleNumber = vehicleNumber;
     }
-
 
     public String getColor() {
         return color;
@@ -127,20 +98,5 @@ public class Vehicle {
 
     public void setVehicleSubcategory(VehicleSubcategory vehicleSubcategory) {
         this.vehicleSubcategory = vehicleSubcategory;
-    }
-
-    @Override
-    public String toString() {
-        return "Vehicle{" +
-                "vehicleId=" + vehicleId +
-                ", vehicleModel='" + vehicleModel + '\'' +
-                ", vehicleNumber='" + vehicleNumber + '\'' +
-                ", color='" + color + '\'' +
-                ", availabilityStatus=" + availabilityStatus +
-                ", vehicleImageUrl='" + vehicleImageUrl + '\'' +
-                ", fuelType=" + fuelType +
-                ", location=" + location +
-                ", vehicleSubcategory=" + vehicleSubcategory +
-                '}';
     }
 }

@@ -1,5 +1,8 @@
 package com.upgrad.hirewheels.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -20,13 +23,16 @@ public class Location {
     @Column(length = 6,nullable = false)
     private int pincode;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "location",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     private Set<Booking> bookings;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "city_id",nullable = false)
     private City city;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "location",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     private Set<Vehicle> vehicles;
 

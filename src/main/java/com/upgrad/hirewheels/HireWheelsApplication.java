@@ -1,20 +1,20 @@
 package com.upgrad.hirewheels;
 
 import com.upgrad.hirewheels.dao.*;
+import com.upgrad.hirewheels.dto.VehicleDTO;
 import com.upgrad.hirewheels.entities.Users;
 import com.upgrad.hirewheels.exceptions.UserAlreadyExistsException;
 import com.upgrad.hirewheels.exceptions.UserDetailsNotFoundException;
 import com.upgrad.hirewheels.exceptions.VehicleDetailsNotFoundException;
-import com.upgrad.hirewheels.services.AdminService;
-import com.upgrad.hirewheels.services.InitService;
-import com.upgrad.hirewheels.services.InitServiceImpl;
-import com.upgrad.hirewheels.services.UserService;
+import com.upgrad.hirewheels.services.*;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.upgrad.hirewheels.entities.*;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -25,7 +25,7 @@ import java.util.List;
 @SpringBootApplication
 public class HireWheelsApplication {
 
-	public static void main(String[] args) throws UserAlreadyExistsException, UserDetailsNotFoundException, VehicleDetailsNotFoundException {
+	public static void main(String[] args) {
 
 		ApplicationContext context = SpringApplication.run(HireWheelsApplication.class, args);
 		UsersDao usersDao = context.getBean(UsersDao.class);
@@ -37,11 +37,12 @@ public class HireWheelsApplication {
 		VehicleDao vehicleDao = context.getBean(VehicleDao.class);
 		VehicleCategoryDao vehicleCategoryDao = context.getBean(VehicleCategoryDao.class);
 		VehicleSubcategoryDao vehicleSubcategoryDao = context.getBean(VehicleSubcategoryDao.class);
+
+		AdminService adminService=context.getBean(AdminService.class);
 		/*InitService initService=context.getBean(InitService.class);
 		initService.start();*/
 
-		UserService userService=context.getBean(UserService.class);
-		AdminService adminService=context.getBean(AdminService.class);
+
 
 
 
@@ -151,49 +152,64 @@ public class HireWheelsApplication {
 		locationDao.save(location);
 
 
+
 		List<VehicleCategory> vehicleCategoryList = Arrays.asList(new VehicleCategory(10, "CAR"),
 				new VehicleCategory(11,"BIKE"));
 		vehicleCategoryDao.saveAll(vehicleCategoryList);
 
 		List<VehicleSubcategory> vehicleSubcategories = new ArrayList<>();
 
-		vehicleSubcategories.add(new VehicleSubcategory(1, "SUV",
-				300,vehicleCategoryDao.findByVehicleCategoryId(10) ));
+		vehicleSubcategories.add(new VehicleSubcategory( "SUV",
+				300,vehicleCategoryDao.findByVehicleCategoryId(3) ));
 
-		vehicleSubcategories.add(new VehicleSubcategory(2, "SEDAN",
-				350,vehicleCategoryDao.findByVehicleCategoryId(10) ));
+		vehicleSubcategories.add(new VehicleSubcategory( "SEDAN",
+				350,vehicleCategoryDao.findByVehicleCategoryId(3) ));
 
-		vehicleSubcategories.add(new VehicleSubcategory(3, "HATCHBACK",
-				250,vehicleCategoryDao.findByVehicleCategoryId(10) ));
+		vehicleSubcategories.add(new VehicleSubcategory( "HATCHBACK",
+				250,vehicleCategoryDao.findByVehicleCategoryId(3) ));
 
-		vehicleSubcategories.add(new VehicleSubcategory(4, "CRUISER",
-				200,vehicleCategoryDao.findByVehicleCategoryId(11) ));
+		vehicleSubcategories.add(new VehicleSubcategory( "CRUISER",
+				200,vehicleCategoryDao.findByVehicleCategoryId(4) ));
 
-		vehicleSubcategories.add(new VehicleSubcategory(5, "DIRT BIKE",
-				200,vehicleCategoryDao.findByVehicleCategoryId(11) ));
+		vehicleSubcategories.add(new VehicleSubcategory( "DIRT BIKE",
+				200,vehicleCategoryDao.findByVehicleCategoryId(4) ));
 
-		vehicleSubcategories.add(new VehicleSubcategory(6, "SPORTS BIKE",
-				150,vehicleCategoryDao.findByVehicleCategoryId(11) ));
+		vehicleSubcategories.add(new VehicleSubcategory( "SPORTS BIKE",
+				150,vehicleCategoryDao.findByVehicleCategoryId(4) ));
 
 		vehicleSubcategoryDao.saveAll(vehicleSubcategories);
-
-		List<FuelType> fuelTypeList = Arrays.asList(new FuelType(1,"Petrol"), new FuelType(2, "Diesel"));
+		List<FuelType> fuelTypeList = Arrays.asList(new FuelType("Petrol"), new FuelType( "Diesel"));
 		fuelTypeDao.saveAll(fuelTypeList);
-
 		Vehicle vehicle=new Vehicle();
 		vehicle.setVehicleModel("Skoda Octavia");
 		vehicle.setVehicleNumber("MH06YR0987");
 		vehicle.setColor("white");
-		vehicle.setFuelType(fuelTypeDao.findByFuelTypeId(10));
+		vehicle.setFuelType(fuelTypeDao.findByFuelTypeId(12));
 		vehicle.setLocation(locationDao.findByLocationId(2));
 		vehicle.setVehicleImageUrl("https://color.com");
-		vehicle.setVehicleSubcategory(vehicleSubcategoryDao.findByVehicleSubcategoryId(7));
+		vehicle.setVehicleSubcategory(vehicleSubcategoryDao.findByVehicleSubcategoryId(6));
+
 
 		vehicle= adminService.registerVehicle(vehicle);
 
-		adminService.changeAvailabilty(11);
-	}
+		Vehicle vehicle1=new Vehicle();
+		vehicle1.setVehicleModel("Creta");
+		vehicle1.setVehicleNumber("MH02YU8743");
+		vehicle1.setColor("white");
+		vehicle1.setFuelType(fuelTypeDao.findByFuelTypeId(12));
+		vehicle1.setLocation(locationDao.findByLocationId(2));
+		vehicle1.setVehicleImageUrl("https://color.com");
+		vehicle1.setVehicleSubcategory(vehicleSubcategoryDao.findByVehicleSubcategoryId(5));
 
 
+		vehicle1= adminService.registerVehicle(vehicle1);
+
+		/*adminService.changeAvailabilty(11);*/
 	}
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
+
+}
 

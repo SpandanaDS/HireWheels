@@ -1,5 +1,8 @@
 package com.upgrad.hirewheels.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -16,10 +19,12 @@ public class VehicleSubcategory {
     @Column(name="price_per_day",nullable = false)
     private float pricePerDay;
 
+    @JsonManagedReference
     @ManyToOne
-    @JoinColumn(name="vehicle_category_id")
+    @JoinColumn(name="vehicle_category_id",nullable = false)
     private VehicleCategory vehicleCategory;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "vehicleSubcategory",fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     private Set<Vehicle> vehicles;
 
@@ -66,6 +71,12 @@ public class VehicleSubcategory {
 
     public void setPricePerDay(float pricePerDay) {
         this.pricePerDay = pricePerDay;
+    }
+
+    public VehicleSubcategory(String vehicleSubcategoryName, float pricePerDay, VehicleCategory vehicleCategory) {
+        this.vehicleSubcategoryName = vehicleSubcategoryName;
+        this.pricePerDay = pricePerDay;
+        this.vehicleCategory = vehicleCategory;
     }
 
     public VehicleSubcategory(int vehicleSubcategoryId, String vehicleSubcategoryName, float pricePerDay, VehicleCategory vehicleCategory) {

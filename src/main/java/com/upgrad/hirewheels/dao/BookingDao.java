@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository("bookingDao")
 public interface BookingDao extends JpaRepository<Booking, Integer> {
+    public Booking findByUser(int id);
+
 
 }
