@@ -12,9 +12,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(value="/hirewheels/v1")
 public class BookingController {
 
     @Autowired
@@ -23,7 +25,7 @@ public class BookingController {
     @Autowired
     AdminService adminService;
 
-    @PostMapping(value="/hirewheels/v1/bookings", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value="/bookings", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addBooking(@RequestBody BookingDTO bookingDTO){
         Booking addBooking=modelmapper.map(bookingDTO,Booking.class);
         Booking saveBooking=adminService.acceptBookingDetails(addBooking);
