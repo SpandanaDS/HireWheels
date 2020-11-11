@@ -11,4 +11,5 @@ public interface VehicleService {
     public List<Vehicle> getAllVehicles();
     public List<Vehicle> getAllVehicles(int id);
     public List<Vehicle> getAvailableVehicles(VehicleCategory vehicleCategory, Booking booking);
+
 }

@@ -1,6 +1,8 @@
 package com.upgrad.hirewheels.services;
 
+import com.upgrad.hirewheels.dao.BookingDao;
 import com.upgrad.hirewheels.dao.VehicleDao;
+import com.upgrad.hirewheels.entities.Booking;
 import com.upgrad.hirewheels.entities.Vehicle;
 import com.upgrad.hirewheels.exceptions.VehicleDetailsNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,10 @@ public class AdminServiceImpl implements AdminService {
     @Qualifier("vehicleDao")
     @Autowired
     VehicleDao vehicleDao;
+
+    @Qualifier("bookingDao")
+    @Autowired
+    BookingDao bookingDao;
 
     @Override
     public Vehicle registerVehicle(Vehicle vehicle) {
@@ -42,4 +48,15 @@ public class AdminServiceImpl implements AdminService {
         }
         return vehicleDao.save(savedVehicle);
     }
+
+    @Override
+    public Vehicle acceptVehicleDetails(Vehicle vehicle) {
+        return vehicleDao.save(vehicle);
+    }
+
+    @Override
+    public Booking acceptBookingDetails(Booking booking) {
+        return bookingDao.save(booking);
+    }
+
 }

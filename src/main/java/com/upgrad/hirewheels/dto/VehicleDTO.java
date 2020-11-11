@@ -15,10 +15,10 @@ public class VehicleDTO {
     private String color;
     private int availabilityStatus;
     private String vehicleImageUrl;
-    private Set<Booking> bookings;
     private FuelType fuelType;
     private Location location;
     private VehicleSubcategory vehicleSubcategory;
+
 
     public int getVehicleId() {
         return vehicleId;
@@ -66,14 +66,6 @@ public class VehicleDTO {
 
     public void setVehicleImageUrl(String vehicleImageUrl) {
         this.vehicleImageUrl = vehicleImageUrl;
-    }
-
-    public Set<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(Set<Booking> bookings) {
-        this.bookings = bookings;
     }
 
     public FuelType getFuelType() {

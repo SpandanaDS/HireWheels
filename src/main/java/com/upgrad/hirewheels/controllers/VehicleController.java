@@ -7,6 +7,7 @@ import com.upgrad.hirewheels.services.VehicleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +29,7 @@ public class VehicleController {
     @Autowired
     BookingService bookingService;
 
-    @GetMapping(value= {"/hirewheels/v1/vehicles"})
+    @GetMapping(value= {"/hirewheels/v1/vehicles"},produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getVehicles() {
         List<Vehicle> vehicleList=vehicleService.getAllVehicles();
         List<VehicleDTO> vehicleDTOList=new ArrayList<>();
@@ -37,7 +38,7 @@ public class VehicleController {
         }
         return new ResponseEntity<>(vehicleDTOList,HttpStatus.OK);
     }
-    @GetMapping(value= {"/hirewheels/v1/vehicles"})
+    @GetMapping(value= {"/hirewheels/v1/getvehicles"},produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getVehicles(@RequestParam(name = "categoryName") String categoryName, @RequestParam(name="pickUpDate")Date pickUpDate,@RequestParam(name="dropDate") Date dropDate,@RequestParam(name="locationId") int locationId) {
         List<Vehicle> vehicleList=vehicleService.getAllVehicles();
         List<VehicleDTO> vehicleDTOList=new ArrayList<>();
