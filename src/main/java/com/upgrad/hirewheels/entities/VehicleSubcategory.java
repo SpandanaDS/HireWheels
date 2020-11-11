@@ -73,11 +73,6 @@ public class VehicleSubcategory {
         this.pricePerDay = pricePerDay;
     }
 
-    public VehicleSubcategory(String vehicleSubcategoryName, float pricePerDay, VehicleCategory vehicleCategory) {
-        this.vehicleSubcategoryName = vehicleSubcategoryName;
-        this.pricePerDay = pricePerDay;
-        this.vehicleCategory = vehicleCategory;
-    }
 
     public VehicleSubcategory(int vehicleSubcategoryId, String vehicleSubcategoryName, float pricePerDay, VehicleCategory vehicleCategory) {
         this.vehicleSubcategoryId = vehicleSubcategoryId;

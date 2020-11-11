@@ -132,7 +132,6 @@ public class Users {
     }
 
     public Users( String firstName, String lastName, String password, String email, String mobileNo, float walletMoney, Role role) {
-
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
